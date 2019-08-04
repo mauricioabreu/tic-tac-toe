@@ -7,10 +7,15 @@ import (
 
 type Game struct {
 	board 	[9]Mark
-	moves 	[]int
+	moves 	[]Move
 }
 
 type Mark struct {
+	symbol string
+}
+
+type Move struct {
+	spot int
 	symbol string
 }
 
@@ -25,6 +30,7 @@ func (m Mark) value() int {
 	}
 }
 
+// All possible combinations for a victory
 var combinations = [][]int{
 	{0, 1, 2},
 	{3, 4, 5},
@@ -45,7 +51,7 @@ func (g *Game) Draw(symbol string, spot int) error {
 		return errors.New("spot already marked")
 	}
 	g.board[spot] = Mark{symbol}
-	g.moves = append(g.moves, spot)
+	g.moves = append(g.moves, Move{spot: spot, symbol: symbol})
 	return nil
 }
 
